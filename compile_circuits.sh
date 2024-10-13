@@ -1,1 +1,1 @@
-circom ./circuits/cubic_circuit.circom --r1cs --sym --wasm --prime bn128 --output ./
+circom ./circuits/with_external_inputs.circom --r1cs --sym --wasm --prime bn128 --output ./
