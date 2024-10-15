@@ -7,7 +7,7 @@ set -e
 cd "./sonobe_wasm_browser"
 
 # Step 2: Build the wasm package for web target
-wasm-pack build --target web
+wasm-pack build --target web 
 
 # Step 3: Move the generated files to the desired locations
 # Move the .wasm file to the project root, then to public folder

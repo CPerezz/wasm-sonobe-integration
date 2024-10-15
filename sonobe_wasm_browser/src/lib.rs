@@ -15,17 +15,17 @@ use ark_grumpkin::{constraints::GVar as GVar2, Projective as G2};
 use ark_ff::{BigInteger, BigInteger256};
 use ark_ff::{Field, PrimeField};
 use byteorder::{LittleEndian, ReadBytesExt};
-use folding_schemes::{
+use num_bigint::BigInt;
+use sonobe::{
     commitment::{kzg::KZG, pedersen::Pedersen},
-    folding::nova::{
-        decider_eth::{prepare_calldata, Decider as DeciderEth},
-        Nova, PreprocessorParam,
+    folding::nova::{Nova, PreprocessorParam},
+    frontend::{
+        circom::{load_witness_from_bin_reader, CircomFCircuitBrowser},
+        FCircuit,
     },
-    frontend::{circom::CircomFCircuit, FCircuit},
     transcript::poseidon::poseidon_canonical_config,
     Decider, FoldingScheme,
 };
-use num_bigint::BigInt;
 use std::collections::HashMap;
 use std::io::Read;
 use std::path::PathBuf;
@@ -37,8 +37,16 @@ const EXTERNAL_INPUTS_LEN: usize = 2usize;
 
 #[wasm_bindgen]
 pub unsafe fn single_fold(r1cs_bytes: Vec<u8>, witness_js: Uint8Array) {
-    pub type N =
-        Nova<G1, GVar, G2, GVar2, CircomFCircuit<Fr>, KZG<'static, Bn254>, Pedersen<G2>, false>;
+    pub type N = Nova<
+        G1,
+        GVar,
+        G2,
+        GVar2,
+        CircomFCircuitBrowser<Fr>,
+        KZG<'static, Bn254>,
+        Pedersen<G2>,
+        false,
+    >;
 
     // Set the panic hook to provide better error messages
     std::panic::set_hook(Box::new(console_error_panic_hook::hook));
@@ -61,7 +69,7 @@ pub unsafe fn single_fold(r1cs_bytes: Vec<u8>, witness_js: Uint8Array) {
     let f_circuit_params = (r1cs_bytes.into(), 1, 2);
     web_sys::console::log_1(&"circuit params created".into());
 
-    let f_circuit = CircomFCircuit::<Fr>::new(f_circuit_params).unwrap();
+    let f_circuit = CircomFCircuitBrowser::<Fr>::new(f_circuit_params).unwrap();
     web_sys::console::log_1(&"created circuit!".into());
 
     // prepare the Nova prover & verifier params

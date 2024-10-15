@@ -13,7 +13,6 @@ export async function loadAndCallSingleFold(r1cs_bytes, witness_js) {
             console.error("Caught Rust panic in JS:", e);
         }
 
-
         console.log('single_fold executed successfully');
         return res;
     } catch (error) {

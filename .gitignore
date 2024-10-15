@@ -4,3 +4,5 @@ package-lock.json
 */pkg
 */Cargo.lock
 sonobe_wasm_browser.js
+*/*.wasm
+*/*.r1cs

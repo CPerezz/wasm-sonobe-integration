@@ -1,13 +1,13 @@
 <html>
 
 <head>
-    <title>Snarkjs client example</title>
+    <title>Sonobe browser folding example</title>
 </head>
 
 <body>
 
-    <h1>Snarkjs client example</h1>
-    <button id="FoldOnce"> Click to bench a single fold proving time </button>
+    <h1>Sonobe browser folding example</h1>
+    <button id="bFold"> Click to bench a single fold proving time </button>
 
     <!-- JS-generated output will be added here. -->
     <pre class="witness"> Witness: <code id="witness"></code></pre>
@@ -20,9 +20,9 @@
         // Import the loadAndCallSingleFold function from fold.js
         import { loadAndCallSingleFold } from './js/fold.js';  // Adjust the path if needed
 
-        const FoldOnce = document.getElementById("FoldOnce");
+        const bFold = document.getElementById("bFold");
 
-        bGenWitness.addEventListener("click", FoldOnce);
+        bFold.addEventListener("click", FoldOnce);
 
         async function FoldOnce() {
             const input = {
