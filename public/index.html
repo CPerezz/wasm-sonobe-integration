@@ -7,7 +7,7 @@
 <body>
 
     <h1>Snarkjs client example</h1>
-    <button id="bGenWitness"> Create Witness </button>
+    <button id="FoldOnce"> Click to bench a single fold proving time </button>
 
     <!-- JS-generated output will be added here. -->
     <pre class="witness"> Witness: <code id="witness"></code></pre>
@@ -20,17 +20,24 @@
         // Import the loadAndCallSingleFold function from fold.js
         import { loadAndCallSingleFold } from './js/fold.js';  // Adjust the path if needed
 
-        const bGenWitness = document.getElementById("bGenWitness");
+        const FoldOnce = document.getElementById("FoldOnce");
 
-        bGenWitness.addEventListener("click", calculateWitness);
+        bGenWitness.addEventListener("click", FoldOnce);
 
-        async function calculateWitness() {
+        async function FoldOnce() {
             const input = {
+                // This should contain the previous IVC input 
+                // obtained from the output of the previous fold.
                 ivc_input: [3],
+                // This are the values that are used as input on each round.
+                // The inputs of the circuit logic that we want to prove within IVC.
                 external_inputs: [6, 7],
             };
+
+            // Compute witness with the custom `snarkjs.js` file
+            // avoiding creating JSON objects.
             let z = await snarkjs.wtns.calculate(input, "with_external_inputs.wasm")
-            console.log("z computed!")
+            console.log("witgen done!")
 
             // Path to the binary file relative to the root of your site
             const filePath = 'with_external_inputs.r1cs';
@@ -39,13 +46,9 @@
             const r1cs_response = await fetch(filePath);
             const r1cs_bytes = await r1cs_response.arrayBuffer();
             const r1cs_res = new Uint8Array(r1cs_bytes);
-            console.log("r1cs_res", r1cs_res);
 
             // Now we call Sonobe to start folding our z
             var res = await loadAndCallSingleFold(r1cs_res, z);
-            alert(res);
-
-
         }
 
     </script>

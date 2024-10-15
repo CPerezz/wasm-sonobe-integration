@@ -11,9 +11,13 @@ ark-serialize = { version = "^0.4.0", default-features = false }
 
 web-sys = { version = "0.3", features = ["console"] }
 console_error_panic_hook = "0.1.6"
-
+web-time = "1.1"
 wasm-bindgen = "0.2"
 
+folding-schemes = { git = "https://github.com/CPerezz/wasm-sonobe-integration.git", default-features = false, branch = "feat/better_browser_support", features = [
+    "parallel",
+    "browser",
+] }
 ark-groth16 = { version = "^0.4.0" }
 ark-bn254 = { version = "0.4.0", features = ["r1cs"] }
 ark-grumpkin = { version = "0.4.0", features = ["r1cs"] }
@@ -35,10 +39,6 @@ ark-std = "0.4.0"
 color-eyre = "0.6.2"
 num-bigint = "0.4.3"
 byteorder = "1.4.3"
-folding-schemes = { path = "./../../../ethereum/sonobe/folding-schemes", features = [
-    "parallel",
-    "wasm",
-], default-features = false }
 rand = "0.8.5"
 getrandom = { version = "0.2", features = ["js"] }
 
