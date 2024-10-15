@@ -3,3 +3,4 @@ package-lock.json
 */target
 */pkg
 */Cargo.lock
+sonobe_wasm_browser.js
