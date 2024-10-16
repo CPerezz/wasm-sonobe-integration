@@ -49,3 +49,7 @@ getrandom = { version = "0.2", features = ["js"] }
 ark-bn254 = { git = "https://github.com/arnaucube/ark-curves-cherry-picked", branch = "cherry-pick" }
 ark-grumpkin = { git = "https://github.com/arnaucube/ark-curves-cherry-picked", branch = "cherry-pick" }
 ark-r1cs-std = { git = "https://github.com/winderica/r1cs-std", branch = "cherry-pick" }
+
+[package.metadata.wasm-pack.profile.release]
+# Comment this out or edit the setup script while developing as compilation will take >10min with these flags.
+wasm-opt = ["-O4", "--flexible-inline-max-function-size", "4294967295"]
